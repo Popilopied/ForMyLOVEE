@@ -7,7 +7,7 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Montserrat:wght@300;400;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght=600;800&family=Montserrat:wght=300;400;600&family=Pinyon+Script&display=swap" rel="stylesheet">
     <style>
         .font-gothic { font-family: 'Cinzel', serif; }
         .font-hand { font-family: 'Pinyon Script', cursive; }
@@ -65,12 +65,9 @@
             </p>
         </div>
 
-        <!-- Видеоплеер локального файла -->
+        <!-- Видеоплеер YouTube -->
         <div class="relative w-full aspect-video rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(225,29,72,0.3)] border-2 border-stone-800 mb-8 bg-black">
-            <video id="my-video" class="w-full h-full object-cover" controls playsinline>
-                <source src="video.mp4" type="video/mp4">
-                Ваш браузер не поддерживает видео.
-            </video>
+            <iframe id="youtube-player" class="w-full h-full absolute inset-0" src="https://www.youtube.com/embed/6uUCwnvuam4?enablejsapi=1&rel=0&playsinline=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
 
         <p class="font-gothic text-lg text-stone-400 tracking-widest uppercase">
@@ -150,7 +147,7 @@
         function revealLove() {
             const welcome = document.getElementById('welcome-screen');
             const main = document.getElementById('main-content');
-            const video = document.getElementById('my-video');
+            const iframe = document.getElementById('youtube-player');
 
             welcome.classList.add('opacity-0', 'scale-90', 'translate-y-[-20px]');
             
@@ -162,7 +159,8 @@
                     main.classList.remove('opacity-0', 'translate-y-12');
                     main.classList.add('opacity-100', 'translate-y-0');
                     
-                    video.play().catch(e => console.log("Видео ожидает нажатия"));
+                    // Автозапуск YouTube
+                    iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
                 }, 50);
             }, 800);
         }
